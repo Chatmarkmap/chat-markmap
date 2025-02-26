@@ -9,16 +9,56 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ai-sdk/google": "^1.1.14",
+    "@heroui/react": "^2.7.2",
+    "@heroui/system": "^2.4.10",
+    "@heroui/theme": "^2.4.9",
+    "ai": "^4.1.41",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.476.0",
+    "markmap-lib": "^0.18.11",
+    "markmap-view": "^0.18.10",
+    "next": "15.1.7",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "next": "15.1.7"
+    "react-markdown": "^9.0.3",
+    "react-resizable-panels": "^2.1.7",
+    "sonner": "^2.0.1",
+    "tailwind-merge": "^3.0.2",
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@trivago/prettier-plugin-sort-imports": "^5.2.2",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "postcss": "^8",
-    "tailwindcss": "^3.4.1"
+    "prettier-plugin-classnames": "^0.7.6",
+    "prettier-plugin-merge": "^0.7.2",
+    "prettier-plugin-tailwindcss": "^0.6.11",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5"
+  },
+  "prettier": {
+    "printWidth": 80,
+    "tabWidth": 2,
+    "trailingComma": "all",
+    "semi": true,
+    "importOrder": [
+      "^react$",
+      "<THIRD_PARTY_MODULES>",
+      "^(.*)css$",
+      "^@/(.*)$",
+      "^[./]"
+    ],
+    "importOrderSeparation": true,
+    "importOrderSortSpecifiers": true,
+    "endingPosition": "absolute-with-indent",
+    "plugins": [
+      "@trivago/prettier-plugin-sort-imports",
+      "prettier-plugin-tailwindcss",
+      "prettier-plugin-classnames",
+      "prettier-plugin-merge"
+    ]
   }
 }
