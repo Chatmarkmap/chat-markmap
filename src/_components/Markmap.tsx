@@ -1,11 +1,15 @@
-import { FC, useEffect, useRef } from "react";
+import { FC, ReactElement, useEffect, useRef } from "react";
 
+import { Button } from "@heroui/react";
 import { Transformer } from "markmap-lib";
 import { Markmap as MarkmapView } from "markmap-view";
 
+import { captureSVG } from "@/lib/captureSVG";
+
 const transformer = new Transformer();
 
-export const MarkMap: FC<{ content?: string }> = ({
+export const MarkMap: FC<{ content?: string; actions?: ReactElement }> = ({
+  actions,
   content = `
 # ***Chatmarkmap***
 - Convert ***AI-generated content*** to ***Mindmap***
@@ -51,5 +55,22 @@ export const MarkMap: FC<{ content?: string }> = ({
     };
   }, []);
 
-  return <svg ref={refSvg} className="h-full w-full"></svg>;
+  return (
+    <div className="relative flex h-full w-full items-stretch">
+      <svg ref={refSvg} className="flex-1 bg-white"></svg>
+      <div className="absolute bottom-[4px] right-2 flex items-center space-x-2">
+        <Button
+          color="primary"
+          variant="bordered"
+          size="sm"
+          onPress={() => {
+            refSvg.current && captureSVG(refSvg.current, "chatmarkmap");
+          }}
+        >
+          Capture as JPG
+        </Button>
+        {actions}
+      </div>
+    </div>
+  );
 };

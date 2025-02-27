@@ -24,7 +24,7 @@ import ReactMarkdown from "react-markdown";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 import { toast } from "sonner";
 
-import { MarkMap } from "@/_components/Markmap";
+import { MarkMap } from "@/_components/markmap";
 import { useApiMutation } from "@/lib/hooks/useApiMutation";
 import { cn } from "@/lib/utils";
 
@@ -176,36 +176,45 @@ export const Chat: FC<{}> = ({}) => {
               hover:bg-[#333]"
           />
           <Panel defaultSize={70} minSize={50} order={2}>
-            <MarkMap content={lastContent?.content} />
+            <MarkMap
+              content={lastContent?.content}
+              actions={
+                <>
+                  {lastContent?.content ? (
+                    <Button
+                      isLoading={saveContentPending}
+                      isDisabled={isStreamLoading}
+                      color="primary"
+                      size="sm"
+                      onPress={async () => {
+                        if (!isSignedIn) {
+                          toast.warning(
+                            "Please sign-in to save your contents.",
+                          );
+                          return;
+                        }
+                        const lastDonate =
+                          localStorage.getItem(LAST_DONATE_KEY);
+                        if (
+                          !lastDonate ||
+                          (Number(lastDonate) &&
+                            Number(lastDonate) < new Date().getTime())
+                        ) {
+                          onOpen();
+                        } else {
+                          onSave(lastContent.content);
+                        }
+                      }}
+                    >
+                      Save to my Contents
+                    </Button>
+                  ) : null}
+                </>
+              }
+            />
           </Panel>
         </PanelGroup>
       </div>
-      {lastContent?.content ? (
-        <Button
-          isLoading={saveContentPending}
-          isDisabled={isStreamLoading}
-          color="primary"
-          className="fixed bottom-10 right-2"
-          size="sm"
-          onPress={async () => {
-            if (!isSignedIn) {
-              toast.warning("Please sign-in to save your contents.");
-              return;
-            }
-            const lastDonate = localStorage.getItem(LAST_DONATE_KEY);
-            if (
-              !lastDonate ||
-              (Number(lastDonate) && Number(lastDonate) < new Date().getTime())
-            ) {
-              onOpen();
-            } else {
-              onSave(lastContent.content);
-            }
-          }}
-        >
-          Save
-        </Button>
-      ) : null}
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
           <ModalHeader className="flex flex-col gap-1">
