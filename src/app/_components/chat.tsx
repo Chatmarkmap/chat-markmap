@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { useEffect, useMemo, useRef } from "react";
 
 import { api } from "$/convex/_generated/api";
@@ -12,6 +12,8 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
+  Select,
+  SelectItem,
   Textarea,
   Tooltip,
   useDisclosure,
@@ -29,8 +31,13 @@ import { cn } from "@/lib/utils";
 export const LAST_DONATE_KEY = "LAST_DONATE_KEY";
 
 export const Chat: FC<{}> = ({}) => {
+  const [model, setModel] = useState("deepseek");
+
   const router = useRouter();
-  const { messages, input, setInput, append, status, stop } = useChat();
+
+  const { messages, input, setInput, append, status, stop } = useChat({
+    api: `/api/chat/${model}`,
+  });
 
   const { pending: saveContentPending, mutate: saveContent } = useApiMutation(
     api.contents.create,
@@ -80,6 +87,18 @@ export const Chat: FC<{}> = ({}) => {
               className="relative mb-2 mr-1 flex h-full flex-col items-stretch
                 overflow-hidden rounded bg-white"
             >
+              <Select
+                label="Select a model"
+                selectedKeys={[model]}
+                onChange={(e) => setModel(e.target.value)}
+              >
+                {[
+                  { key: "deepseek", label: "DeepSeek(deepseek-chat)" },
+                  { key: "google", label: "Google(gemini-1.5-pro-latest)" },
+                ].map(({ key, label }) => (
+                  <SelectItem key={key}>{label}</SelectItem>
+                ))}
+              </Select>
               <div
                 className="flex-1 overflow-y-auto overflow-x-hidden"
                 ref={chatScrollRef}
