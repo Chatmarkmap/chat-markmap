@@ -8,7 +8,10 @@ import { captureSVG } from "@/lib/captureSVG";
 
 const transformer = new Transformer();
 
-export const MarkMap: FC<{ content?: string; actions?: ReactElement }> = ({
+export const CustomMarkMap: FC<{
+  content?: string;
+  actions?: ReactElement;
+}> = ({
   actions,
   content = `
 # ***Chatmarkmap***

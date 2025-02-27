@@ -24,7 +24,7 @@ import { useQuery } from "convex/react";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 import { toast } from "sonner";
 
-import { MarkMap } from "@/_components/Markmap";
+import { CustomMarkMap } from "@/_components/custom-markmap";
 import { useApiMutation } from "@/lib/hooks/useApiMutation";
 import { cn } from "@/lib/utils";
 
@@ -163,7 +163,7 @@ export default function Page() {
                   hover:bg-[#333]"
               />
               <Panel defaultSize={40} minSize={20} order={2}>
-                <MarkMap content={selectedContent?.content} />
+                <CustomMarkMap content={selectedContent?.content} />
               </Panel>
             </PanelGroup>
           </Panel>

@@ -24,7 +24,7 @@ import ReactMarkdown from "react-markdown";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 import { toast } from "sonner";
 
-import { MarkMap } from "@/_components/markmap";
+import { CustomMarkMap } from "@/_components/custom-markmap";
 import { useApiMutation } from "@/lib/hooks/useApiMutation";
 import { cn } from "@/lib/utils";
 
@@ -176,7 +176,7 @@ export const Chat: FC<{}> = ({}) => {
               hover:bg-[#333]"
           />
           <Panel defaultSize={70} minSize={50} order={2}>
-            <MarkMap
+            <CustomMarkMap
               content={lastContent?.content}
               actions={
                 <>
