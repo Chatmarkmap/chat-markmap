@@ -163,7 +163,8 @@ export const Chat: FC<{}> = ({}) => {
       </div>
       {lastContent?.content ? (
         <Button
-          isLoading={isStreamLoading || saveContentPending}
+          isLoading={saveContentPending}
+          isDisabled={isStreamLoading}
           color="primary"
           className="fixed bottom-10 right-2"
           size="sm"
