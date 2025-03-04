@@ -1,4 +1,5 @@
 import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { Button } from "@heroui/react";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
@@ -44,7 +45,9 @@ export default function RootLayout({
             <div className="flex items-center bg-muted p-2">
               <Header />
               <SignedOut>
-                <SignInButton />
+                <SignInButton>
+                  <Button variant="bordered">Sign In</Button>
+                </SignInButton>
               </SignedOut>
               <SignedIn>
                 <UserButton />

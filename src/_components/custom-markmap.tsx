@@ -1,6 +1,7 @@
 import { FC, ReactElement, useEffect, useRef } from "react";
 
 import { Button } from "@heroui/react";
+import throttle from "lodash.throttle";
 import { Transformer } from "markmap-lib";
 import { Markmap as MarkmapView } from "markmap-view";
 
@@ -25,6 +26,16 @@ export const CustomMarkMap: FC<{
   const refSvg = useRef<SVGSVGElement>(null);
   const refMarkmap = useRef<MarkmapView>(null);
 
+  const throttledUpdate = useRef(
+    throttle((markmap: MarkmapView, content: string) => {
+      const { root } = transformer.transform(content);
+
+      markmap.setData(root).then(() => {
+        markmap.fit();
+      });
+    }, 1_000),
+  ).current;
+
   useEffect(() => {
     if (refMarkmap.current) return;
     const markmap = MarkmapView.create(refSvg.current);
@@ -34,10 +45,7 @@ export const CustomMarkMap: FC<{
   useEffect(() => {
     const markmap = refMarkmap.current;
     if (content && markmap) {
-      const { root } = transformer.transform(content);
-      markmap.setData(root).then(() => {
-        markmap.fit();
-      });
+      throttledUpdate(markmap, content);
     }
   }, [content]);
 
